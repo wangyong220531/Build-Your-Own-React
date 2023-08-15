@@ -1,4 +1,4 @@
-import { Ele } from "."
+import { Ele } from "./index"
 
 export default function createElement(type: string, config: { nodeValue: string; children?: Ele[] }, ...args: never[]) {
     const props = Object.assign({}, config)

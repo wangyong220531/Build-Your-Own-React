@@ -1,3 +1,4 @@
+import { Ele } from "./index"
 import { createPublicInstance } from "./component"
 import reconcile from "./reconcile"
 
@@ -13,17 +14,15 @@ interface Dom {
     dom?: HTMLElement
 }
 
-export default function instantiate(element) {
+export default function instantiate(element: Ele) {
     const { type, props } = element
     const isDomElement = typeof type === "string"
 
     if (isDomElement) {
-        // Instantiate DOM Element
         const isTextElement = type === "TEXT_ELEMENT"
         const dom = isTextElement ? document.createElement("") : document.createElement(type)
 
-        // Add event listner
-        const isListener = name => name.startWith("on")
+        const isListener = (name: string) => name.slice(0, 2) === "on"
         Object.keys(props)
             .filter(isListener)
             .forEach(name => {
@@ -31,30 +30,26 @@ export default function instantiate(element) {
                 dom.addEventListener(eventType, props[name])
             })
 
-        // Set properties
-        const isAttribute = name => !isListener(name) && name !== "children"
+        const isAttribute = (name: string) => !isListener(name) && name !== "children"
         Object.keys(props)
             .filter(isAttribute)
             .forEach(name => {
                 dom[name] = props[name]
             })
 
-        // Instantiate and append children
         const childElements = props.children || []
         const childInstances = childElements.map(instantiate)
         const childDoms = childInstances.map(childInstance => childInstance.dom)
-        childDoms.forEach(childDom => dom.appendChild(childDom))
+        childDoms.forEach((childDom: HTMLElement) => dom.appendChild(childDom))
 
         const instance = { dom, element, childInstances }
         return instance
     } else {
-        // Instantiate component element
         const instance: Dom = {}
         const publicInstance = createPublicInstance(element, instance)
         const childElement = publicInstance.render()
         const childInstance = instantiate(childElement)
         const dom = childInstance.dom
-
         Object.assign(instance, { dom, element, childInstance, publicInstance })
         return instance
     }

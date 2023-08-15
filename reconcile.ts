@@ -1,4 +1,6 @@
 import instantiate from "./instantiate"
+import reconcileChildren from "./reconcileChildren"
+import { updateDomProperties } from "./updateDomProperties"
 
 export default function reconcile(parentDOM, instance, element) {
     if (instance === null) {
@@ -15,14 +17,13 @@ export default function reconcile(parentDOM, instance, element) {
         parentDOM.replaceChild(newInstance.dom, instance.dom)
         return newInstance
     }
-    // if (typeof element.type === "string") {
-    //     updateDomProperties(instance.dom, instance.element.props, element.props)
-    //     instance.childInstances = reconcileChildren(instance, element)
-    //     instance.element = element
-    //     return instance
-    // }
-    
-    // Update composite instance
+    if (typeof element.type === "string") {
+        updateDomProperties(instance.dom, instance.element.props, element.props)
+        instance.childInstances = reconcileChildren(instance, element)
+        instance.element = element
+        return instance
+    }
+
     instance.publicInstance.props = element.props
     const childElement = instance.publicInstance.render()
     const oldChildInstance = instance.childInstance
