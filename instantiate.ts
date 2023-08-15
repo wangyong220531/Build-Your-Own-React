@@ -1,3 +1,6 @@
+import { createPublicInstance } from "./component"
+import reconcile from "./reconcile"
+
 let rootInstance = null
 
 function render(element, container) {
@@ -6,7 +9,11 @@ function render(element, container) {
     rootInstance = nextInstance
 }
 
-function instantiate(element) {
+interface Dom {
+    dom?: HTMLElement
+}
+
+export default function instantiate(element) {
     const { type, props } = element
     const isDomElement = typeof type === "string"
 
@@ -42,7 +49,7 @@ function instantiate(element) {
         return instance
     } else {
         // Instantiate component element
-        const instance = {}
+        const instance: Dom = {}
         const publicInstance = createPublicInstance(element, instance)
         const childElement = publicInstance.render()
         const childInstance = instantiate(childElement)

@@ -1,4 +1,6 @@
-function reconcile(parentDOM, instance, element) {
+import instantiate from "./instantiate"
+
+export default function reconcile(parentDOM, instance, element) {
     if (instance === null) {
         const newInstance = instantiate(element)
         parentDOM.appendChild(newInstance.dom)
@@ -13,12 +15,13 @@ function reconcile(parentDOM, instance, element) {
         parentDOM.replaceChild(newInstance.dom, instance.dom)
         return newInstance
     }
-    if (typeof element.type === "string") {
-        updateDomProperties(instance.dom, instance.element.props, element.props)
-        instance.childInstances = reconcileChildren(instance, element)
-        instance.element = element
-        return instance
-    }
+    // if (typeof element.type === "string") {
+    //     updateDomProperties(instance.dom, instance.element.props, element.props)
+    //     instance.childInstances = reconcileChildren(instance, element)
+    //     instance.element = element
+    //     return instance
+    // }
+    
     // Update composite instance
     instance.publicInstance.props = element.props
     const childElement = instance.publicInstance.render()

@@ -1,6 +1,19 @@
-import render from "./index.js"
+import render from "./render"
 
-const app = {
+export interface Ele {
+    type: string
+    props: {
+        id?: string
+        type?: string
+        value?: string
+        href?: string
+        nodeValue?: string
+        children?: Ele[]
+        onClick?: () => void
+    }
+}
+
+const app: Ele = {
     type: "div",
     props: {
         id: "container",
@@ -16,7 +29,7 @@ const app = {
             {
                 type: "span",
                 props: {
-                    onClick: e => alert("Hi"),
+                    onClick: () => alert("Hi"),
                     children: [{ type: "TEXT ELEMENT", props: { nodeValue: "click me" } }]
                 }
             }
