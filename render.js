@@ -21,4 +21,5 @@ function render(element, parentDom) {
     childElements.forEach(function (childElement) { return render(childElement, dom); });
     parentDom === null || parentDom === void 0 ? void 0 : parentDom.appendChild(dom);
 }
-exports.default = render;
+const _default = render
+export { _default as default }

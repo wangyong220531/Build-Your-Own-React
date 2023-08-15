@@ -1,6 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var render_1 = require("./render");
+"use strict"
+Object.defineProperty(exports, "__esModule", { value: true })
+import render_1 from "./render.js"
 var app = {
     type: "div",
     props: {
@@ -17,11 +17,13 @@ var app = {
             {
                 type: "span",
                 props: {
-                    onClick: function () { return alert("Hi"); },
+                    onClick: function () {
+                        return alert("Hi")
+                    },
                     children: [{ type: "TEXT ELEMENT", props: { nodeValue: "click me" } }]
                 }
             }
         ]
     }
-};
-(0, render_1.default)(app, document.getElementById("root"));
+}
+;(0, render_1)(app, document.getElementById("root"))
