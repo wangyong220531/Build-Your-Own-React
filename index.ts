@@ -1,4 +1,4 @@
-import render from "./render"
+import Weact from "./weact"
 
 export interface Ele {
     type: string
@@ -37,4 +37,4 @@ const app: Ele = {
     }
 }
 
-render(app, document.getElementById("root"))
+Weact.render(app, document.getElementById("root"))
